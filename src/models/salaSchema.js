@@ -14,7 +14,12 @@ const salaSchema = new Schema ({
     permalink:{
         type:String,
         required: true
-    } 
+    },
+    identificacao_participanteId: {
+        type: Schema.Types.ObjectId, 
+        ref: 'participante',
+        required: true
+    }
 })
 const salacollections = mongoose.model('sala', salaSchema)
 
