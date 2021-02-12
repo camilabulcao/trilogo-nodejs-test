@@ -19,9 +19,9 @@ const getAll = (request, response) => {
 
 const addSala = (request, response) => {
     const salaBody = request.body //pegando o body que o usuario digitou
-    const sala = new salacollections(salaBody) //criando um novo dado para o body
+    const sala = new salaCollections(salaBody) //criando um novo dado para o body
 
-    sala.save((error)=>{
+    sala.save((error, sala)=>{
         if (error) {
             return response.status(400).send(error)
         }else{

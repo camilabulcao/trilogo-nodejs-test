@@ -1,6 +1,6 @@
 const mongoose = require ("mongoose")
 const Schema = mongoose.Schema
-const mongoosePaginate = require('mongoose-paginate')
+//const mongoosePaginate = require('mongoose-paginate')
 
 const salaSchema = new Schema ({
     ticket_id: {
@@ -10,21 +10,23 @@ const salaSchema = new Schema ({
     },
     description: {
         type:String,
-        required: true
+        required: false
+    
     },  
     permalink:{
         type:String,
-        required: true
+        required: false
+        
     },
-    identificacao_participanteId: {
+    /*identificacao_participanteId: {
         type: Schema.Types.ObjectId, 
         ref: 'participante',
         required: true
-    }
+    }*/
 })
-const salaCollections = mongoose.model('sala', salaSchema)
+const salaCollections = mongoose.model('salaCollections', salaSchema)
 
-salaSchema.plugin(mongoosePaginate)
+//salaSchema.plugin(mongoosePaginate)
 
     module.exports = salaCollections
 

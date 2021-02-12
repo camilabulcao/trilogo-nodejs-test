@@ -1,7 +1,11 @@
 const express =  require ('express')
 const path = require('path') //padrão do node
-const mongoose = require('mongoose')
+const route = require('./src/routes/salaRoute')
 const bodyParser = require('body-parser')
+const database = require('./dbConnection')
+const salaCollections = require('./src/models/salaSchema')
+
+database.connect();
 
 
 //websocket é um novo protocolo
@@ -16,14 +20,16 @@ app.set('views', path.join(__dirname, 'public'))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
+
+app.use('/api', route);
+
 app.use('/', (request, response) =>{
      response.render('index.html')
 })
-const msgRoute = require('./src/routes/msgRoute')
-app.use('/msg', msgRoute);
 
 let messages = []; //array para armazenagem sem a conexão com o MongoDb
 
+//let chatTrilogo = null
 
 io.on('connection', socket =>{
     console.log(`Socket conectado: ${socket.id}`)
@@ -33,12 +39,12 @@ io.on('connection', socket =>{
 
     socket.on('sendMessage', data =>{
         messages.push(data)
+        //chatTrilogo = new salaCollections(data)
+        //chatTrilogo.save()
         socket.broadcast.emit('receivedMessage', data)
     })
 
 })
 
-//mongoose.connect(dbConnection ,{useMongoClient : true} ,(err) => {
-   // console.log('mongodb connected',err);
- // })
+
 server.listen(3000)
