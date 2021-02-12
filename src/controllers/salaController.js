@@ -62,9 +62,31 @@ const getByDescricao = (request, response) =>{
 
 }
 
+function getMenusPage (request, response) {
+    Menus
+    .find({ }, { page: 3, limit: 5 }, function(err, menu)  {
+        if(err){
+            res.status(500).send({
+                message: 'Error na solicitação'
+            });
+        }else{
+            if(!menu){
+                res.status(404).send({
+                    message: 'Não existe nenhum menu nesse registro'
+                });
+            }else{
+                res.status(200).send({
+                    menu
+                });
+            }
+        }
+    })
+}
+
 module.exports ={
     getAll,
     addSala,
     getSalaId,
-    getByDescricao
+    getByDescricao, 
+    getMenusPage
 }
