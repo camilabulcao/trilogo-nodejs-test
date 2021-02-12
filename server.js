@@ -29,7 +29,7 @@ app.use('/', (request, response) =>{
 
 let messages = []; //array para armazenagem sem a conexão com o MongoDb
 
-//let chatTrilogo = null
+let chatTrilogo = null
 
 io.on('connection', socket =>{
     console.log(`Socket conectado: ${socket.id}`)
@@ -39,8 +39,8 @@ io.on('connection', socket =>{
 
     socket.on('sendMessage', data =>{
         messages.push(data)
-        //chatTrilogo = new salaCollections(data)
-        //chatTrilogo.save()
+        chatTrilogo = new salaCollections(data)
+        chatTrilogo.save()
         socket.broadcast.emit('receivedMessage', data)
     })
 

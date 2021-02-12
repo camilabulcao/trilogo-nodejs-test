@@ -8,7 +8,12 @@ const salaSchema = new Schema ({
          auto: true, 
          required: true
     },
-    description: {
+    username: {
+        type:String,
+        required: false
+    
+    },  
+    message: {
         type:String,
         required: false
     
