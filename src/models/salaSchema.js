@@ -23,6 +23,11 @@ const salaSchema = new Schema ({
         required: false
         
     },
+    description:{
+        type:String,
+        required: false
+        
+    },
     /*identificacao_participanteId: {
         type: Schema.Types.ObjectId, 
         ref: 'participante',

@@ -14,6 +14,7 @@
 </head>
 <body>
     <form id="chat">
+        <input id="text" name="description" placeholder="Description">
         <input id="text" name="permalink" placeholder="Permalink">
         <input id="text" name="username" placeholder="Digite seu usuário">
         <div class="messages"></div>
@@ -25,7 +26,7 @@
     
 
     function renderMessage(message) { //Para renderizar a msg na tela
-        $('.messages').append('<div class="message"><strong>'+message.author +'</strong>: '+ message.message +'</div>')
+        $('.messages').append('<div class="message"><strong>'+message.username +'</strong>: '+ message.message +'</div>')
     }
 
         socket.on('previousMessages',function(messages){
@@ -41,15 +42,17 @@
     $('#chat').submit(function(event){
         event.preventDefault()
 
+        var description = $('input[name=description]').val()
         var permalink = $('input[name=permalink]').val()
         var author = $('input[name=username]').val()
         var message = $('input[name=message]').val()
         
-        if(author.length && message.length && permalink.length) {
+        if(author.length && message.length && permalink.length && description.length) {
             var messageObject ={
-                author: author,
+                username: author,
                 message: message,
                 permalink: permalink,
+                description: description,
             };
 
             renderMessage(messageObject)
