@@ -1,9 +1,8 @@
 const express =  require ('express')
 const path = require('path') //padrão do node
-const route = require('./src/routes/salaRoute')
+const route = require('./src/routes/chatRoomRoute')
 const bodyParser = require('body-parser')
 const database = require('./dbConnection')
-const salaCollections = require('./src/models/salaSchema')
 const msgCollections = require('./src/models/msgSchema')
 
 database.connect();
@@ -72,6 +71,8 @@ io.on('connection', socket =>{
         //    }
         // })
 console.log(data)
+    
+       
         //find pra pegar o id da sala a partir do data.sala (que se refere ao ticket_id)
         //find pra pegar o id de participante a partir do username
         // depois que pegar esses dois Ids, cria um novo objeto passando os valores certos
@@ -106,5 +107,4 @@ server.listen(3000)
                 
            /* }
         })
-         
-    }*/
+        */

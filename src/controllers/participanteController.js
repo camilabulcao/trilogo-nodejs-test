@@ -4,8 +4,8 @@ const participanteCollections = require("../models/participanteSchema")
 
 const getAll = (request, response) => {
     console.log(request.url)
-
-    contatoCollections.find((error, participante) => {
+    console.log("estou aqui")
+    participanteCollections.find((error, participante) => {
         if (error) {
             return response.status(500).send(error)
         } else {
