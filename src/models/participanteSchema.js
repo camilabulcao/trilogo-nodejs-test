@@ -7,9 +7,15 @@ const participanteSchema = new Schema ({
         auto: true, 
         required: true
     }, 
-    nome: {
+    username: {
         type: String, 
         required:true
+    },
+    listaSala: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'room'
+        }]
     }
 })
 const participanteCollections = mongoose.model('participante', participanteSchema)

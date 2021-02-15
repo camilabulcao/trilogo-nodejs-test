@@ -49,8 +49,8 @@ const getSalaId = (request, response) =>{
 }
 
 const getByDescricao = (request, response) =>{
-    const descricaoParams = request.params.descricao
-    salaCollections.findOne({descricao: descricaoParams}, (error,sala)=>{
+    const descricaoParams = request.params.description
+    salaCollections.findOne({description: descricaoParams}, (error,sala)=>{
         if (error) { 
             return response.status(500).send(error) 
         }else if (sala) {
@@ -62,7 +62,24 @@ const getByDescricao = (request, response) =>{
 
 }
 
-function getMenusPage (request, response) {
+const getByTicket = (request, response) =>{
+    const ticketParams = request.params.ticket_id
+    salaCollections.findOne({ticket_id: ticketParams}, (error,sala)=>{
+        if (error) { 
+            return response.status(500).send(error) 
+        }else if (sala) {
+            return response.status(200).send(sala) 
+    } else {
+       return response.status(400).json({ mensagem: 'Ops sala não encontrada! :/', })
+       } 
+    })
+
+}
+/*const getMgsStatus = (require, response) =>{
+
+}*/
+
+/*function getMenusPage (request, response) {
     Menus
     .find({ }, { page: 3, limit: 5 }, function(err, menu)  {
         if(err){
@@ -81,12 +98,13 @@ function getMenusPage (request, response) {
             }
         }
     })
-}
+}*/
 
 module.exports ={
     getAll,
     addSala,
     getSalaId,
     getByDescricao, 
-    getMenusPage
+    getByTicket
+    //getMenusPage
 }

@@ -2,22 +2,26 @@ const mongoose = require ("mongoose")
 const Schema = mongoose.Schema
 
 const msgSchema = new Schema({
-    remetente:{
+    autor:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'participante',
         required: true
     },
-    mensagem: {
+    texto: {
         type: String, 
         required: true
     },
     sala: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'sala',
+        ref: 'room',
         required: true
+    },
+    lido:{
+        type: Boolean,
+        default: false,
     }
 })
-const msgCollections = mongoose.model('msg', msgSchema)
+const msgCollections = mongoose.model('message', msgSchema)
 
 module.exports = msgCollections
 

@@ -4,40 +4,36 @@ const Schema = mongoose.Schema
 
 const salaSchema = new Schema ({
     ticket_id: {
-         type: mongoose.Schema.Types.ObjectId,//tipo de dado dentro do mongoose que é id
-         auto: true, 
+         type: String,
          required: true
     },
-    username: {
+    description: {
         type:String,
-        required: false
-    
-    },  
-    message: {
-        type:String,
-        required: false
+        required: true
     
     },  
     permalink:{
         type:String,
-        required: false
-        
-    },
-    description:{
-        type:String,
-        required: false
-        
-    },
-    /*identificacao_participanteId: {
-        type: Schema.Types.ObjectId, 
-        ref: 'participante',
         required: true
-    }*/
+        
+    },
+    listaMsg: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'message'
+        }]
+    },
+    listaParticipante:{
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'participante'
+        }]
+    }
+    
 })
-const salaCollections = mongoose.model('salaCollections', salaSchema)
+const salaCollections = mongoose.model('room', salaSchema)
 
 //salaSchema.plugin(mongoosePaginate)
 
     module.exports = salaCollections
-
 

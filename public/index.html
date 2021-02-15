@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Chat Trílogo</title>
+    <title>Chat Trilogo</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src= "https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"></script>
@@ -13,8 +13,9 @@
 
 </head>
 <body>
+    <img src="https://img.ibxk.com.br/2020/01/30/30021141299110.jpg">
     <form id="chat">
-        <input id="text" name="description" placeholder="Description">
+        <input id="text" name="ticket_id" placeholder="ticket_id">
         <input id="text" name="permalink" placeholder="Permalink">
         <input id="text" name="username" placeholder="Digite seu usuário">
         <div class="messages"></div>
@@ -26,7 +27,7 @@
     
 
     function renderMessage(message) { //Para renderizar a msg na tela
-        $('.messages').append('<div class="message"><strong>'+message.username +'</strong>: '+ message.message +'</div>')
+        $('.messages').append('<div class="message"><strong>'+message.autor +'</strong>: '+ message.texto +'</div>')
     }
 
         socket.on('previousMessages',function(messages){
@@ -42,17 +43,16 @@
     $('#chat').submit(function(event){
         event.preventDefault()
 
-        var description = $('input[name=description]').val()
+        var ticket_id= $('input[name=ticket_id]').val()
         var permalink = $('input[name=permalink]').val()
         var author = $('input[name=username]').val()
         var message = $('input[name=message]').val()
         
-        if(author.length && message.length && permalink.length && description.length) {
+        if(author.length && message.length && permalink.length && ticket_id.length) {
             var messageObject ={
-                username: author,
-                message: message,
-                permalink: permalink,
-                description: description,
+                autor: author,
+                texto: message,
+                sala: ticket_id,
             };
 
             renderMessage(messageObject)
