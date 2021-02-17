@@ -1,27 +1,24 @@
 const express =  require ('express')
 const path = require('path') //padrão do node
-const route = require('./src/routes/chatRoomRoute')
+const router = require('./src/routes/Routes')
 const bodyParser = require('body-parser')
 const database = require('./dbConnection')
-const msgCollections = require('./src/models/msgSchema')
 
 database.connect();
 
-
-//websocket é um novo protocolo
 const app = express()
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}))
 const server = require('http').createServer(app) //definido o protocolo http
 const io = require('socket.io')(server)
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'public'))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
-
-app.use('/api', route);
+app.use('/api', router);
 
 app.use('/', (request, response) =>{
      response.render('index.html')
@@ -108,3 +105,5 @@ server.listen(3000)
            /* }
         })
         */
+
+        module.exports = io

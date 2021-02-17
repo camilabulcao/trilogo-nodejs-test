@@ -1,40 +1,55 @@
-const express = require("express")
-const msgCollections = require("../models/msgSchema")
+const ChatRoom = require("../models/chatRoomSchema")
 
-const getMsgBySala = (request, response) => {
-    console.log("to aqui")
-    const idSala = request.params.ticket_id
-    console.log("entrei no get mensagem by sala")
-    console.log(idSala)
-    msgCollections.find({sala: idSala},(error, msg) =>{
-            if (error) {
-                return response.status(500).send(error)
-            }else{
-                if (idSala) {
-                    return response.status(200).send(msg)
-                } else {
-                    return response.status(404).send("Mensagem não encontrada")
-                }
-            }
-    })
+const listByTicketId = async (request, response) => {
+    const { ticket_id } = request.params;
 
+    if (!ticket_id){
+        response.status(400).send({message: 'ticked_id is required'})
+        return
+    }
+    const chatRoom = await ChatRoom.find({ticket_id});
+    if(chatRoom.length === 0){
+        response.status(400).send({message: 'Chat room not found'})
+        return
+    }
+    const result = chatRoom[0].messages
+  
+    if(result.length === 0){
+      response.status(200).send({message: 'No messages in this chat room'})
+    } else{
+      response.status(200).send(result)
+      return result
+    }
 }
-const getAll = (request, response) => {
-    console.log(request.url)
-console.log("estou no get all msg")
-    salaCollections.find((error, mensagem) =>{
-        if(error){
-            return response.status(500).send(error)
-        }else{
-            return response.status(200).json({
-                mensagem: "Get com sucesso", mensagem
-             })
-        }
-    })
 
+const add = async (request, response) => {
+    const { ticket_id } = request.params;
+    const msg = request.body
+
+    if (!ticket_id){
+        response.status(400).send({message: 'ticked_id is required'})
+        return
+    }
+
+    const chatRoom = await ChatRoom.find({ticket_id});
+    if(chatRoom.length === 0){
+        response.status(400).send({message: 'Chat room not found'})
+        return
+    }
+    
+    try{
+      chatRoom[0].messages.push(msg)
+    
+     await chatRoom[0].save()
+        response.status(200).send({message: 'Message added'})
+     }catch(error){
+         return console.error({message: " failed"})
+
+     }
+    
 }
+
 
 module.exports =  {
-    getMsgBySala, 
-    getAll
+    listByTicketId,add
 }

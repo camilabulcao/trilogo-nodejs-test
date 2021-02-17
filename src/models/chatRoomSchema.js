@@ -1,33 +1,26 @@
-const mongoose = require ("mongoose")
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-//const mongoosePaginate = require('mongoose-paginate')
+const userSchema = require("./userSchema")
+const msgSchema = require("./msgSchema")
 
-const chatRoomSchema = new Schema ({
-    ticket_id: {
-         type: String,
-         required: true
-    },
-    description: {
-        type:String,
+const chatRoomSchema = new Schema({
+    "ticket_id": {
+        type: String,
         required: true
-    
-    },  
-    permalink:{
-        type:String,
-        required: true 
     },
-    userList:{
-        type: [{
-            type: Schema.Types.String,
-            ref: 'chatUser'
-        }]
-    }
-    
+    "description": {
+        type: String,
+        required: true
+    },
+    "permalink": {
+        type: String,
+        required: true
+    },
+    "user_list": [userSchema],
+    "messages": [msgSchema]
 })
-const chatRoomCollections = mongoose.model('room', chatRoomSchema)
+const ChatRoom = mongoose.model('chatroom', chatRoomSchema)
 
-//salaSchema.plugin(mongoosePaginate)
 
-    module.exports = chatRoomCollections
+module.exports = ChatRoom
 
-//db.rooms.insert([{"ticket_id": "123", "description": "lâmpada queimada", "permalink": "www.trilogo.com", "listaParticipante": [ObjectId("602ac8da6b5a66ab704f1db5"), ObjectId("602ac8da6b5a66ab704f1db6")]})
